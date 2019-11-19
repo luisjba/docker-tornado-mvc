@@ -1,5 +1,6 @@
 FROM python:3.7
 
+WORKDIR /home/app
 ARG TORNADO_MVC_SRC_TARGET=/home/src_tornado-mvc
 
 COPY scripts/init_container.sh /tmp/
@@ -27,6 +28,5 @@ EXPOSE 8080
 ENV PORT 8080
 ENV PIP_INSTALL_REQUIREMENTS ""
 
-WORKDIR /home/app
 ENTRYPOINT ["init_container"]
 CMD ["python", "$WORKDIR/app.py", "-p $PORT"]
