@@ -6,9 +6,9 @@ if [ -z $TORNADO_MVC_SRC_TARGET ]; then
   exit 1
 fi
 
+[ -d $TORNADO_MVC_SRC_TARGET ] || mkdir -p $TORNADO_MVC_SRC_TARGET
 cd "$TORNADO_MVC_SRC_TARGET" \
-&& git clone https://github.com/luisjba/tornado-mvc.git \
-&& cd tornado-mvc \
+&& git clone https://github.com/luisjba/tornado-mvc.git . \
 && git submodule update --init --recursive \
 && pip install -r requirements.txt || exit 1
 
