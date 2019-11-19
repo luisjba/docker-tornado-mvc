@@ -90,7 +90,7 @@ function setup_tornado_mvc(){
 }
 # installing requirements
 pip_install_requirements
-setup_tornado_mvc $TORNADO_MVC_SRC_TARGET/tornado-mvc
+setup_tornado_mvc $TORNADO_MVC_SRC_TARGET
 
 service rsyslog start
 $@
