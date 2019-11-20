@@ -90,7 +90,5 @@ function setup_tornado_mvc(){
 # installing requirements
 pip_install_requirements
 setup_tornado_mvc
-
-service rsyslog start
 # $@
 $(eval "echo $@")
