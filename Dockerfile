@@ -23,8 +23,9 @@ RUN echo "Installing Tornado-MVC" \
 
 EXPOSE 8080
 
+ENV TORNADO_MVC_APP /home/app
 ENV PORT 8080
 ENV PIP_INSTALL_REQUIREMENTS ""
-
+WORKDIR $TORNADO_MVC_APP
 ENTRYPOINT ["init_container"]
-CMD ["python", "$WORKDIR/app.py", "-p $PORT"]
+CMD ["python", "app.py", "-p $PORT"]
