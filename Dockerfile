@@ -2,7 +2,6 @@ FROM python:3.7
 
 WORKDIR /home/app
 ARG TORNADO_MVC_SRC_TARGET=/home/src_tornado-mvc
-
 COPY scripts/init_container.sh /tmp/
 COPY scripts/install_tornado_mvc.sh /tmp/
 
@@ -20,7 +19,6 @@ RUN chmod +x /tmp/*.sh \
 
 RUN echo "Installing Tornado-MVC" \  
 && /tmp/install_tornado_mvc.sh $TORNADO_MVC_SRC_TARGET \
-&& mv /tmp/init_container.sh /usr/local/bin/init_container \
 && sync
 
 EXPOSE 8080
