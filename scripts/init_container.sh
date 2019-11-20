@@ -36,53 +36,53 @@ function setup_tornado_mvc(){
     local TORNADO_MVC_SRC_TARGET=${1%/}
     for py_file_src in $TORNADO_MVC_SRC_TARGET/*.py; do
         py_file=`basename $py_file_src`
-        if [ ! -f $WORKDIR/$py_file ]; then 
-            cp $py_file_src $WORKDIR/$py_file
+        if [ ! -f $TORNADO_MVC_APP/$py_file ]; then 
+            cp $py_file_src $TORNADO_MVC_APP/$py_file
         else
             echo "Custom core $py_file"
         fi
     done
     # Install default controller if not exista
-    [ -d $WORKDIR/controllers ] || mkdir $WORKDIR/controllers
+    [ -d $TORNADO_MVC_APP/controllers ] || mkdir $TORNADO_MVC_APP/controllers
     for py_file_src in $TORNADO_MVC_SRC_TARGET/controllers/*; do
         py_file=`basename $py_file_src`
-        if [ ! -f $WORKDIR/controllers/$py_file ]; then 
+        if [ ! -f $TORNADO_MVC_APP/controllers/$py_file ]; then 
             echo "Installed controller $py_file"
-            cp $py_file_src $WORKDIR/controllers/$py_file
+            cp $py_file_src $TORNADO_MVC_APP/controllers/$py_file
         fi
     done
     # Install default views
-    [ -d $WORKDIR/views ] || mkdir $WORKDIR/views
+    [ -d $TORNADO_MVC_APP/views ] || mkdir $TORNADO_MVC_APP/views
     for py_file_src in $TORNADO_MVC_SRC_TARGET/views/*; do
         b_name=`basename $py_file_src`
         #if is file, copy if not exists
         if [ -f $py_file_src ]; then
-            if [ ! -f $WORKDIR/views/$b_name ]; then 
-                cp $py_file_src $WORKDIR/views/$b_name
+            if [ ! -f $TORNADO_MVC_APP/views/$b_name ]; then 
+                cp $py_file_src $TORNADO_MVC_APP/views/$b_name
             fi
         else 
-            [ -d $WORKDIR/views/$b_name ] || mkdir $WORKDIR/views/$b_name
+            [ -d $TORNADO_MVC_APP/views/$b_name ] || mkdir $TORNADO_MVC_APP/views/$b_name
             for html_file_src in $TORNADO_MVC_SRC_TARGET/views/$b_name/*.html; do 
                 html_file=`basename $html_file_src`
-                if [ ! -f $WORKDIR/views/$b_name/$html_file ]; then
+                if [ ! -f $TORNADO_MVC_APP/views/$b_name/$html_file ]; then
                     echo "Installed view into $b_name/$html_file"
-                    cp $html_file_src $WORKDIR/views/$b_name/$html_file
+                    cp $html_file_src $TORNADO_MVC_APP/views/$b_name/$html_file
                 fi   
             done
         fi
     done
     # Install the assets
-    [ -d $WORKDIR/assets ] || mkdir $WORKDIR/assets
+    [ -d $TORNADO_MVC_APP/assets ] || mkdir $TORNADO_MVC_APP/assets
     for asset_dir_src in $TORNADO_MVC_SRC_TARGET/assets/*; do
         asset_dir=`basename $asset_dir_src`
         #if is file, copy if not exists
         if [ -d $asset_dir_src ]; then
-            [ -d $WORKDIR/assets/$asset_dir ] || mkdir $WORKDIR/assets/$asset_dir
+            [ -d $TORNADO_MVC_APP/assets/$asset_dir ] || mkdir $TORNADO_MVC_APP/assets/$asset_dir
             for asset_file_src in $TORNADO_MVC_SRC_TARGET/views/$b_name/*; do 
                 asset_file=`basename $asset_file_src`
-                if [ ! -f $WORKDIR/assets/$asset_dir/$asset_file ]; then
+                if [ ! -f $TORNADO_MVC_APP/assets/$asset_dir/$asset_file ]; then
                     echo "Installed asset into $asset_dir/$asset_file"
-                    cp $asset_file_src $WORKDIR/assets/$asset_dir/$asset_file
+                    cp $asset_file_src $TORNADO_MVC_APP/assets/$asset_dir/$asset_file
                 fi   
             done
         fi
@@ -93,4 +93,5 @@ pip_install_requirements
 setup_tornado_mvc $TORNADO_MVC_SRC_TARGET
 
 service rsyslog start
-$@
+# $@
+$(eval "echo $@")
