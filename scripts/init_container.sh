@@ -28,8 +28,10 @@ function pip_install_requirements(){
         for py_package in $PIP_INSTALL_REQUIREMENTS; do
             py_package=${py_package#\"}
             py_package=${py_package%\"}
-            echo "installing python package $py_package via pip"
-            pip install $py_package
+            if [ ! -f requirements.txt ] || [ `grep "$py_package" requirements.txt &> /dev/null; echo $?` -gt 0  ]; then
+                echo "Installing custom env requirement: $py_package via pip"
+                pip install $py_package
+            fi
         done
     fi
     return 0
