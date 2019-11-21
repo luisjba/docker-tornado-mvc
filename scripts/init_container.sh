@@ -21,14 +21,16 @@ service rsyslog start
 function pip_install_requirements(){
 #install requirements from requirements.txt
     if [ -f requirements.txt ]; then
-          echo "Installing requirements from file"
-          pip install -r requirements.txt
+        echo "Installing requirements from file"
+        pip install -r requirements.txt
     fi
     if [ -n "$PIP_INSTALL_REQUIREMENTS" ]; then
-          for py_package in $PIP_INSTALL_REQUIREMENTS; do
-               echo "installing python package $py_package via pip"
-               pip install ${py_package}
-          done
+        for py_package in $PIP_INSTALL_REQUIREMENTS; do
+            py_package=${py_package#\"}
+            py_package=${py_package%\"}
+            echo "installing python package $py_package via pip"
+            pip install $py_package
+        done
     fi
     return 0
 }
